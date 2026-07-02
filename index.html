@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>KITFORM — 3D Uniform Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="enhancements.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="KITFORM ホーム">
+      <span class="brand-mark">K</span>
+      <span>KITFORM</span>
+    </a>
+    <div class="header-center">3D UNIFORM STUDIO <span class="status"><i></i>LIVE</span></div>
+    <div class="header-actions">
+      <button class="icon-button" id="undoBtn" title="元に戻す" aria-label="元に戻す">↶</button>
+      <button class="button secondary" id="galleryBtn">保存一覧</button>
+      <button class="button secondary" id="saveBtn">デザイン保存</button>
+      <button class="button primary" id="exportBtn">画像を書き出す</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="preview" aria-label="3Dプレビュー">
+      <div class="preview-meta">
+        <span class="eyebrow">CUSTOM FOOTBALL JERSEY</span>
+        <h1>あなたの一着を、<br><em>360°</em>でつくる。</h1>
+      </div>
+      <button class="ar-launch" id="arBtn"><span>◎</span> ARで試着する</button>
+      <div id="canvasWrap" class="canvas-wrap">
+        <div id="loading" class="loading"><span></span>3D MODEL LOADING</div>
+      </div>
+      <div class="view-controls" aria-label="表示操作">
+        <button data-view="front" class="active">FRONT</button>
+        <button data-view="back">BACK</button>
+        <button data-view="side">SIDE</button>
+        <button data-view="top">TOP</button>
+        <button data-view="bottom">BOTTOM</button>
+        <span></span>
+        <button id="autoRotate" aria-label="自動回転">AUTO</button>
+        <button id="zoomOut" aria-label="縮小">−</button>
+        <button id="zoomIn" aria-label="拡大">＋</button>
+      </div>
+      <div class="drag-hint"><span>↔</span> ドラッグで回転 · スクロールでズーム</div>
+    </section>
+
+    <aside class="editor">
+      <div class="editor-heading">
+        <div><span class="step">DESIGN LAB</span><h2>ユニフォームを編集</h2></div>
+        <span class="autosave">● 自動保存</span>
+      </div>
+      <nav class="tabs" aria-label="編集メニュー">
+        <button class="tab active" data-tab="design">柄</button>
+        <button class="tab" data-tab="colors">カラー</button>
+        <button class="tab" data-tab="marking">文字・番号</button>
+        <button class="tab" data-tab="logo">ロゴ</button>
+      </nav>
+
+      <div class="panels">
+        <section class="panel active" data-panel="design">
+          <div class="section-title"><div><span>01</span><h3>ベースデザイン</h3></div><small>18 PATTERNS</small></div>
+          <div class="pattern-grid" id="patternGrid"></div>
+          <div class="field range-field">
+            <div class="label-row"><label for="patternScale">柄の細かさ</label><output id="patternScaleValue">100%</output></div>
+            <input type="range" id="patternScale" min="60" max="180" value="100" />
+          </div>
+        </section>
+
+        <section class="panel" data-panel="colors">
+          <div class="section-title"><div><span>02</span><h3>チームカラー</h3></div><small>LIVE PREVIEW</small></div>
+          <div class="color-list">
+            <label class="color-control"><input type="color" id="baseColor" value="#f4f1e8"><span><b>ベース</b><small>BODY COLOR</small></span><code>#F4F1E8</code></label>
+            <label class="color-control"><input type="color" id="secondaryColor" value="#173f35"><span><b>サブ</b><small>PATTERN COLOR</small></span><code>#173F35</code></label>
+            <label class="color-control"><input type="color" id="accentColor" value="#c7f343"><span><b>アクセント</b><small>DETAIL COLOR</small></span><code>#C7F343</code></label>
+          </div>
+          <button class="shuffle" id="shuffleColors">⤨ カラーパレットをシャッフル</button>
+        </section>
+
+        <section class="panel" data-panel="marking">
+          <div class="section-title"><div><span>03</span><h3>文字と背番号</h3></div><small>CURVED TO FABRIC</small></div>
+          <label class="field"><span>選手名</span><input type="text" id="playerName" maxlength="14" value="NAKAMURA" placeholder="PLAYER NAME"></label>
+          <div class="field range-field"><div class="label-row"><label for="nameSize">選手名サイズ</label><output id="nameSizeValue">65%</output></div><input type="range" id="nameSize" min="35" max="130" value="65"></div>
+          <div class="two-col">
+            <label class="field"><span>背番号</span><input type="text" id="playerNumber" maxlength="2" value="10" inputmode="numeric"></label>
+            <label class="field"><span>フォント</span><select id="numberFont"><option value="Impact">ブロック</option><option value="Arial Black">モダン</option><option value="Georgia">クラシック</option></select></label>
+          </div>
+          <label class="field"><span>番号スタイル</span><select id="numberStyle"><option value="solid">ソリッド</option><option value="outline">アウトライン</option><option value="double">ダブルライン</option></select></label>
+          <div class="field range-field"><div class="label-row"><label for="numberSize">背番号サイズ</label><output id="numberSizeValue">100%</output></div><input type="range" id="numberSize" min="65" max="135" value="100"></div>
+          <div class="position-box">
+            <b>選手名の位置</b>
+            <div class="field range-field"><div class="label-row"><label for="nameX">左右</label><output id="nameXValue">中央</output></div><input type="range" id="nameX" min="-50" max="50" value="0"></div>
+            <div class="field range-field"><div class="label-row"><label for="nameY">上下</label><output id="nameYValue">22%</output></div><input type="range" id="nameY" min="8" max="65" value="22"></div>
+          </div>
+          <div class="position-box">
+            <b>背番号の位置</b>
+            <div class="field range-field"><div class="label-row"><label for="numberX">左右</label><output id="numberXValue">中央</output></div><input type="range" id="numberX" min="-50" max="50" value="0"></div>
+            <div class="field range-field"><div class="label-row"><label for="numberY">上下</label><output id="numberYValue">40%</output></div><input type="range" id="numberY" min="18" max="82" value="40"></div>
+          </div>
+          <p class="surface-note"><span>✓</span> 文字と番号は3D表面へ直接マッピングされ、生地の曲面に沿って表示されます。</p>
+        </section>
+
+        <section class="panel" data-panel="logo">
+          <div class="section-title"><div><span>04</span><h3>オリジナルロゴ</h3></div><small>MULTI LOGO</small></div>
+          <div class="logo-slots" id="logoSlots"><span>ロゴはまだありません</span></div>
+          <label class="upload" id="uploadLabel">
+            <input type="file" id="logoUpload" accept="image/png,image/jpeg,image/svg+xml,image/webp" />
+            <span class="upload-icon">＋</span><b>ロゴを追加</b><small>最大6個 · PNG / JPG / SVG / WebP</small>
+          </label>
+          <div id="logoControls" class="logo-controls disabled">
+            <div class="field range-field"><div class="label-row"><label for="logoSize">サイズ</label><output id="logoSizeValue">100%</output></div><input type="range" id="logoSize" min="40" max="180" value="100"></div>
+            <label class="field"><span>配置面</span><select id="logoSide"><option value="front">前面</option><option value="back">背面</option></select></label>
+            <div class="field range-field"><div class="label-row"><label for="logoX">左右位置</label><output id="logoXValue">中央</output></div><input type="range" id="logoX" min="-50" max="50" value="0"></div>
+            <div class="field range-field"><div class="label-row"><label for="logoY">上下位置</label><output id="logoYValue">38%</output></div><input type="range" id="logoY" min="5" max="92" value="38"></div>
+            <div class="field range-field"><div class="label-row"><label for="logoRotation">回転</label><output id="logoRotationValue">0°</output></div><input type="range" id="logoRotation" min="-45" max="45" value="0"></div>
+            <button class="remove" id="removeLogo">ロゴを削除</button>
+          </div>
+        </section>
+
+      </div>
+      <div class="editor-footer"><span><i></i> リアルタイム3Dレンダリング</span><button id="resetBtn">↻ すべてリセット</button></div>
+    </aside>
+  </main>
+  <div class="modal" id="galleryModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head"><div><span class="step">MY COLLECTION</span><h2>保存したユニフォーム</h2></div><button id="closeGallery" aria-label="閉じる">×</button></div>
+      <div class="saved-grid" id="savedGrid"></div>
+    </div>
+  </div>
+  <div class="modal ar-modal" id="arModal" aria-hidden="true">
+    <div class="modal-card ar-card">
+      <div class="modal-head"><div><span class="step">LIVE TRY-ON</span><h2>ARユニフォーム試着</h2></div><button id="closeAR" aria-label="閉じる">×</button></div>
+      <div class="ar-layout">
+        <div class="ar-stage" id="arStage">
+          <video id="arVideo" playsinline muted></video>
+          <canvas id="arCanvas"></canvas>
+          <div class="ar-empty" id="arEmpty"><b>カメラでユニフォームを試着</b><span>上半身全体が映る位置に立ってください</span></div>
+          <div class="ar-badge">LIVE BODY FIT</div>
+        </div>
+        <div class="ar-sidebar">
+          <div class="ar-actions"><button class="button primary" id="startAR">カメラを開始</button><button class="button secondary" id="stopAR" disabled>停止</button></div>
+          <div class="fit-card"><span class="step">SIZE ASSIST</span><h3>おすすめサイズ</h3>
+            <div class="two-col"><label class="field"><span>身長（cm）</span><input type="number" id="bodyHeight" min="130" max="210" value="170"></label><label class="field"><span>胸囲（任意・cm）</span><input type="number" id="bodyChest" min="60" max="150" placeholder="未入力"></label></div>
+            <label class="field"><span>好みのフィット</span><select id="fitPreference"><option value="regular">レギュラー</option><option value="slim">スリム</option><option value="loose">ゆったり</option></select></label>
+            <div class="size-result" id="sizeResult"><span>推奨サイズ</span><strong>M</strong><small>身長を入力すると更新されます</small></div>
+          </div>
+          <p class="privacy-note">カメラ映像はブラウザ内だけで処理され、保存・送信されません。サイズは姿勢と入力値から算出する目安です。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script type="importmap">{"imports":{"three":"./three.module.min.js"}}</script>
+  <script type="module">
+    import * as THREE from 'three';
+    import { GLTFLoader } from './GLTFLoader.js';
+    window.THREE = THREE;
+    window.GLTFLoader = GLTFLoader;
+    await import('./app.js');
+  </script>
+</body>
+</html>
