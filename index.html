@@ -140,7 +140,12 @@
           <div class="ar-badge">LIVE BODY FIT</div>
         </div>
         <div class="ar-sidebar">
-          <div class="ar-actions"><button class="button primary" id="startAR">カメラを開始</button><button class="button secondary" id="stopAR" disabled>停止</button></div>
+          <div class="ar-actions">
+            <button class="button primary" id="startAR">カメラを開始</button>
+            <button class="button secondary" id="switchCamera" disabled>カメラ切替</button>
+            <button class="button secondary" id="stopAR" disabled>停止</button>
+          </div>
+          <div class="camera-status" id="cameraStatus" role="status">内側カメラを使用します</div>
           <div class="fit-card"><span class="step">SIZE ASSIST</span><h3>おすすめサイズ</h3>
             <div class="two-col"><label class="field"><span>身長（cm）</span><input type="number" id="bodyHeight" min="130" max="210" value="170"></label><label class="field"><span>胸囲（任意・cm）</span><input type="number" id="bodyChest" min="60" max="150" placeholder="未入力"></label></div>
             <label class="field"><span>好みのフィット</span><select id="fitPreference"><option value="regular">レギュラー</option><option value="slim">スリム</option><option value="loose">ゆったり</option></select></label>
